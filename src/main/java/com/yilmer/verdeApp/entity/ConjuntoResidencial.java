@@ -1,11 +1,9 @@
 package com.yilmer.verdeApp.entity;
 
+import com.yilmer.verdeApp.enums.EstadoSuscripcion;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "conjuntos")
@@ -19,12 +17,12 @@ public class ConjuntoResidencial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long conjuntoId;
 
-    @NotBlank(message = "El nombre del conjunto es obligatorio")
     private String nombre;
-
-    @NotBlank(message = "La dirección es necesaria para la ubicación")
+    private String nit;
     private String direccion;
 
-    @NotBlank(message = "El NIT es obligatorio para temas legales")
-    private String nit;
+    @Enumerated(EnumType.STRING)
+    private EstadoSuscripcion estadoSuscripcion = EstadoSuscripcion.DEMO; // Inicia en DEMO por defecto
+
+    private LocalDate fechaProximoPago;
 }

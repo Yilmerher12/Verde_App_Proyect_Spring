@@ -33,11 +33,18 @@ public class ConjuntoResidencialController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConjuntoResidencial> actualizar(@Valid @PathVariable Long id, @RequestBody ConjuntoResidencial detalles) {
+    public ResponseEntity<ConjuntoResidencial> actualizar(@PathVariable Long id, @RequestBody ConjuntoResidencial detalles) {
+
         ConjuntoResidencial existente = conjuntoService.obtenerPorId(id);
+
         existente.setNombre(detalles.getNombre());
         existente.setDireccion(detalles.getDireccion());
+
         existente.setNit(detalles.getNit());
+        existente.setEstadoSuscripcion(detalles.getEstadoSuscripcion()); // Nuevo
+
+        existente.setFechaProximoPago(detalles.getFechaProximoPago()); // Nuevo
+
         return ResponseEntity.ok(conjuntoService.guardar(existente));
     }
 

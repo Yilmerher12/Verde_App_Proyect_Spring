@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class UnidadService {
-
     private final UnidadRepository unidadRepository;
 
     public UnidadService(UnidadRepository unidadRepository) {
@@ -28,7 +27,10 @@ public class UnidadService {
     public Unidad guardar(Unidad unidad) {
         return unidadRepository.save(unidad);
     }
+
     public void eliminar(Long id) {
+        // Primero verificamos si existe para lanzar nuestra excepción personalizada si no
+        this.obtenerPorId(id);
         unidadRepository.deleteById(id);
     }
 }

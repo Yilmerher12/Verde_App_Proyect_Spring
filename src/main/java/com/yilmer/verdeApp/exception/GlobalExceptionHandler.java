@@ -12,7 +12,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Este atrapa los errores de validación (@NotBlank, @Email)
+    // Para errores de validación (@NotBlank, @Email)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> manejarValidaciones(MethodArgumentNotValidException ex) {
         Map<String, String> errores = new HashMap<>();
@@ -21,15 +21,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errores, HttpStatus.BAD_REQUEST);
     }
 
-    // Este atrapa tu ResourceNotFoundException (Actividad 2)
+    // Para cuando algo no existe (404)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> manejarNoEncontrado(ResourceNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
-    public ResponseEntity<String> manejarIntegridad(org.springframework.dao.DataIntegrityViolationException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body("Error de integridad: Esta operación no es posible por restricciones de la base de datos.");
+    // Para errores de lógica de negocio (como el de unidad ocupada)
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> manejarErroresNegocio(RuntimeException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

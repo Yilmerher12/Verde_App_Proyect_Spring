@@ -81,7 +81,7 @@ Se implementaron las siguientes validaciones:
 
 - **Unicidad:** - No se permiten dos residentes con la misma cédula.
 
-- **Regla de Oro:** Una unidad (Torre/Apto) solo puede tener un residente responsable asignado (@OneToOne). Si intentas asignar un segundo residente a la misma unidad, el sistema lanzará un error de validación.
+- **Regla de Oro:** Una unidad (Torre/Apto) solo puede tener un usuario responsable asignado (@OneToOne). Si intentas asignar un segundo usuario a la misma unidad, el sistema lanzará un error de validación.
 ---
 
 ### Cómo abrir y correr este proyecto (Paso a Paso)

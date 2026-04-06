@@ -33,18 +33,15 @@ public class UnidadController {
         return ResponseEntity.ok(unidadService.obtenerPorId(id));
     }
 
-    // Método para ACTUALIZAR (PUT)
     @PutMapping("/{id}")
-    public ResponseEntity<Unidad> actualizar(@Valid @PathVariable Long id, @RequestBody Unidad unidadDetalles) {
-        // 1. Buscamos la unidad. Si no existe, salta la alarma (Exception).
-        Unidad unidadExistente = unidadService.obtenerPorId(id);
+    public ResponseEntity<Unidad> actualizar(@PathVariable Long id, @RequestBody Unidad detalles) {
 
-        // 2. Modificamos los datos
-        unidadExistente.setTorre(unidadDetalles.getTorre());
-        unidadExistente.setNumeroApartamento(unidadDetalles.getNumeroApartamento());
+        Unidad existente = unidadService.obtenerPorId(id);
 
-        // 3. Guardamos los cambios
-        return ResponseEntity.ok(unidadService.guardar(unidadExistente));
+        existente.setTorre(detalles.getTorre());
+        existente.setNumeroApto(detalles.getNumeroApto()); // Nombre corregido
+
+        return ResponseEntity.ok(unidadService.guardar(existente));
     }
 
     // Método para BORRAR (DELETE)
