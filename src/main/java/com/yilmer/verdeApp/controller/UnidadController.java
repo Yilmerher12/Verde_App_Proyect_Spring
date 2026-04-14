@@ -2,11 +2,14 @@ package com.yilmer.verdeApp.controller;
 
 import com.yilmer.verdeApp.entity.Unidad;
 import com.yilmer.verdeApp.service.UnidadService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/unidades")
@@ -44,15 +47,15 @@ public class UnidadController {
         return ResponseEntity.ok(unidadService.guardar(existente));
     }
 
-    // Método para BORRAR (DELETE)
+    @Operation(summary = "Eliminar una unidad habitacional", description = "Elimina el registro de la unidad física (apartamento/casa)")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        // Primero verificamos que exista para poder lanzar el error si no
-        unidadService.obtenerPorId(id);
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+        unidadService.eliminar(id);
 
-        // Aquí deberías tener un método borrar en tu UnidadService
-        // unidadService.eliminar(id);
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("status", "success");
+        respuesta.put("mensaje", "Unidad habitacional eliminada del sistema");
 
-        return ResponseEntity.noContent().build(); // Retorna un 204 (Sin contenido)
+        return ResponseEntity.ok(respuesta);
     }
 }

@@ -1,11 +1,14 @@
 package com.yilmer.verdeApp.controller;
 import com.yilmer.verdeApp.entity.ConjuntoResidencial;
 import com.yilmer.verdeApp.service.ConjuntoResidencialService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/conjuntos")
@@ -48,9 +51,16 @@ public class ConjuntoResidencialController {
         return ResponseEntity.ok(conjuntoService.guardar(existente));
     }
 
+    @Operation(summary = "Eliminar un conjunto residencial", description = "Borra el conjunto y libera las unidades asociadas")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         conjuntoService.eliminar(id);
-        return ResponseEntity.noContent().build();
+
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("status", "success");
+        respuesta.put("mensaje", "Conjunto Residencial eliminado exitosamente");
+        respuesta.put("id_afectado", id.toString());
+
+        return ResponseEntity.ok(respuesta);
     }
 }

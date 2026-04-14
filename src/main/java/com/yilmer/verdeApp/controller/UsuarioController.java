@@ -2,12 +2,15 @@ package com.yilmer.verdeApp.controller;
 
 import com.yilmer.verdeApp.dto.UsuarioDTO;
 import com.yilmer.verdeApp.entity.Usuario;
+import io.swagger.v3.oas.annotations.Operation;
 import com.yilmer.verdeApp.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -48,9 +51,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.actualizar(id, detalles));
     }
 
+    @Operation(summary = "Eliminar un usuario", description = "Elimina permanentemente un usuario de la base de datos por su ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         usuarioService.eliminar(id);
-        return ResponseEntity.noContent().build();
+
+        Map<String, String> respuesta = new HashMap<>();
+        respuesta.put("status", "success");
+        respuesta.put("mensaje", "Usuario con ID " + id + " ha sido eliminado correctamente");
+
+        return ResponseEntity.ok(respuesta);
     }
 }
